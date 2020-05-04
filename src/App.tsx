@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import './App.css';
 import { Layout, Menu } from 'antd';
+import { BrowserRouter as Router,Route, Link } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -9,6 +10,7 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
+import DataCosole from './pages/DataConsole';
 
 const { Header, Sider, Content } = Layout;
 
@@ -25,6 +27,7 @@ class App extends React.Component {
 
   render() {
     return (
+      <Router>
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo" />
@@ -32,6 +35,7 @@ class App extends React.Component {
             <Menu.Item key="1">
               <UserOutlined />
               <span>nav 1</span>
+              <Link to="/DataCosole">数据库控制台</Link>
             </Menu.Item>
             <Menu.Item key="2">
               <VideoCameraOutlined />
@@ -58,10 +62,15 @@ class App extends React.Component {
               minHeight: 800,
             }}
           >
-            Content
+             <Route exact path="/DataCosole" component={DataCosole} />
+
+
+
+
           </Content>
         </Layout>
       </Layout>
+      </Router>
     );
   }
 }
