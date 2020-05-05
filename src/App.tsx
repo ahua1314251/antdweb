@@ -6,7 +6,6 @@ import { BrowserRouter as Router,Route, Link } from "react-router-dom";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
@@ -33,9 +32,10 @@ class App extends React.Component {
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
             <Menu.Item key="1">
-              <UserOutlined />
-              <span>nav 1</span>
-              <Link to="/DataCosole">数据库控制台</Link>
+              {/* <UserOutlined /> */}
+              
+              <Link  to="/DataCosole"><span>数据库控制台     </span></Link>
+         
             </Menu.Item>
             <Menu.Item key="2">
               <VideoCameraOutlined />
@@ -63,7 +63,7 @@ class App extends React.Component {
             }}
           >
              <Route exact path="/DataCosole" component={DataCosole} />
-
+             <Route exact path="/" component={DataCosole} />
 
 
 
