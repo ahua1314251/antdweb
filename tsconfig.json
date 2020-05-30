@@ -23,17 +23,10 @@
     "esModuleInterop": true,
     "strict": false,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
+    "isolatedModules": true
   },
   "exclude": [
-    "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts"
+    "node_modules"
   ]
   ,
   "include": [
