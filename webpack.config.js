@@ -1,3 +1,5 @@
+
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');//用于自动生成html入口文件的插件
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");//将CSS代码提取为独立文件的插件
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");//CSS模块资源优化插件
@@ -16,6 +18,7 @@ module.exports={
     },
     entry:{
         index:'./src/index.tsx'
+        // vendor: ['react','react-dom','react-router-dom']
     },
     output: {
         path: __dirname + '/dists',
@@ -29,7 +32,7 @@ module.exports={
              use: 'happypack/loader?id=cssLoader'
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/,
+                test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
                 exclude: /node_modules/,
                 use: 'happypack/loader?id=urlLoader'
             },
@@ -88,7 +91,8 @@ module.exports={
         new ExtractTextPlugin("styles.css"),
         new HtmlWebpackPlugin({
             template:"./public/index.html",
-            filename:"index.html"
+            filename:"index.html",
+            favicon: path.resolve('./public/favicon.ico')
         }),
         new UglifyJsPlugin({
             uglifyOptions: {
@@ -129,11 +133,10 @@ module.exports={
             automaticNameDelimiter: '~',//文件生成时的连接符
             name: true,//让cacheGroups里设置的名字有效
             cacheGroups: {//当打包同步代码时,上面的参数生效
-                vendors: {
-                    priority: -10,//值越大,优先级越高.模块先打包到优先级高的组里
-                    filename: 'vendors.js'//把所有的库都打包到一个叫vendors.js的文件里
-
-                },
+                defaultVendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                  },
                 commom: {
                     priority: -20,
                     reuseExistingChunk: true,//如果一个模块已经被打包过了,那么再打包时就忽略这个上模块
@@ -150,6 +153,8 @@ module.exports={
     }
 ,externals: {
   
+    // 'react': 'window.React',
+    // 'reactDOM': 'window.ReactDOM'
 }
 }
 
