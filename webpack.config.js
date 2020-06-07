@@ -82,7 +82,7 @@ module.exports={
             threadPool: happyThreadPool,
             verbose: true
           }),
-        new CleanWebpackPlugin(),
+        // new CleanWebpackPlugin(),
         // new HtmlWebpackPlugin(),//生成入口html文件
         new MiniCssExtractPlugin({
             filename: "[name].css"
@@ -110,9 +110,9 @@ module.exports={
                 },
                 output: {
                     // 最紧凑的输出
-                    beautify: false,
+                    beautify: true,
                     // 删除所有的注释
-                    comments: false
+                    comments: true
                 }
             }
         })
@@ -126,23 +126,22 @@ module.exports={
         splitChunks: {
             chunks: "all",//在做代码分割时，只对异步代码生效，写成all的话，同步异步代码都会分割
             minSize: 250000, //引入的包大于500KB才做代码分割
-            maxSize: 350000,
+            maxSize: 450000,
             minChunks: 2, //当一个包至少被用了多少次的时候才进行代码分割
             maxAsyncRequests: 3, //同时加载的模块数最多是5个
-            maxInitialRequests: 3, //入口文件做代码分割最多能分成3个js文件
+            maxInitialRequests: 4, //入口文件做代码分割最多能分成3个js文件
             automaticNameDelimiter: '~',//文件生成时的连接符
             name: true,//让cacheGroups里设置的名字有效
             cacheGroups: {//当打包同步代码时,上面的参数生效
-                defaultVendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/, //检测引入的库是否在node_modlues目录下的
+                    priority: -10,
+                    filename: 'vendors.js'
                   },
-                commom: {
+                  default: {
                     priority: -20,
                     reuseExistingChunk: true,//如果一个模块已经被打包过了,那么再打包时就忽略这个上模块
-                    filename: 'common.js',
-                    test: /[\\/]node_modules[\\/]/ //检测引入的库是否在node_modlues目录下的
-
+                    filename: 'common.js'
                 }
             }
         }
