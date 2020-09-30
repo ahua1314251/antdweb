@@ -11,7 +11,7 @@ const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports={
-    mode: 'production',
+    mode: 'development',
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".ts", ".tsx",".js"]
@@ -21,7 +21,7 @@ module.exports={
         // vendor: ['react','react-dom','react-router-dom']
     },
     output: {
-        path: __dirname + '/dists',
+        path: __dirname + '/dist',
         filename: "bundle.js"
     },
 
@@ -93,33 +93,43 @@ module.exports={
             template:"./public/index.html",
             filename:"index.html",
             favicon: path.resolve('./public/favicon.ico')
-        }),
-        new UglifyJsPlugin({
-            uglifyOptions: {
-                cache:true,
-                parallel:true,
-                sourceMap: true,
-                compress: {
-                    // 删除所有的 `console` 语句，可以兼容ie浏览器
-                    drop_console: true,
-                    // 内嵌定义了但是只用到一次的变量
-                    collapse_vars: true,
-                    // 提取出出现多次但是没有定义成变量去引用的静态值
-                    reduce_vars: true
-
-                },
-                output: {
-                    // 最紧凑的输出
-                    beautify: true,
-                    // 删除所有的注释
-                    comments: true
-                }
-            }
         })
+        // ,
+        // new UglifyJsPlugin({
+        //     uglifyOptions: {
+        //         cache:true,
+        //         parallel:true,
+        //         sourceMap: true,
+        //         compress: {
+        //             // 删除所有的 `console` 语句，可以兼容ie浏览器
+        //             drop_console: true,
+        //             // 内嵌定义了但是只用到一次的变量
+        //             collapse_vars: true,
+        //             // 提取出出现多次但是没有定义成变量去引用的静态值
+        //             reduce_vars: true
+
+        //         },
+        //         output: {
+        //             // 最紧凑的输出
+        //             beautify: true,
+        //             // 删除所有的注释
+        //             comments: true
+        //         }
+        //     }
+        // })
     ],
     devServer: {
-        contentBase:__dirname + '/dists',
+        contentBase:__dirname + '/dist',
         compress: true,
+        open: true,
+        port: 8080,
+        hot: true,
+        hotOnly: true,
+        historyApiFallback: {
+            rewrites: [
+              { from: /\.html/, to: '/' }
+            ]
+          },
         port: 9000
     },
     optimization: {

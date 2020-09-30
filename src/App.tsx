@@ -3,6 +3,7 @@ import * as React from 'react';
 import './App.css';
 import { Layout, Menu } from 'antd';
 import { BrowserRouter as Router,Route, Link } from "react-router-dom";
+import { browserHistory } from 'react-router'
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -10,6 +11,7 @@ import {
   UploadOutlined,
 } from '@ant-design/icons';
 import DataCosole from './pages/DataConsole';
+import Monitor from './pages/Monitor';
 
 const { Header, Sider, Content } = Layout;
 
@@ -26,7 +28,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router history={browserHistory} >
       <Layout>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo" />
@@ -39,7 +41,7 @@ class App extends React.Component {
             </Menu.Item>
             <Menu.Item key="2">
               <VideoCameraOutlined />
-              <span>nav 2</span>
+              <Link  to="/Monitor"><span>系统监控     </span></Link>
             </Menu.Item>
             <Menu.Item key="3">
               <UploadOutlined />
@@ -62,9 +64,10 @@ class App extends React.Component {
               minHeight: 800,
             }}
           >
-             <Route exact path="/DataCosole" component={DataCosole} />
-             <Route exact path="/" component={DataCosole} />
-
+             <Route exact path="/DataCosole.html" component={DataCosole} />
+             <Route exact path="/" component={Monitor} />
+             <Route exact path="/Monitor.html" component={Monitor} />
+             
 
 
           </Content>
