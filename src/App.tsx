@@ -29,7 +29,7 @@ class App extends React.Component {
   render() {
     return (
       <Router history={browserHistory} >
-      <Layout>
+      <Layout className ='fullHeight'>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
@@ -49,7 +49,7 @@ class App extends React.Component {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout className="site-layout">
+        <Layout className="site-layout fullHeight">
           <Header className="site-layout-background" style={{ padding: 0 }}>
             {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
@@ -57,11 +57,10 @@ class App extends React.Component {
             })}
           </Header>
           <Content
-            className="site-layout-background"
+            className="site-layout-background content"
             style={{
               margin: '24px 16px',
-              padding: 24,
-              minHeight: 800,
+              padding: 24
             }}
           >
              <Route exact path="/DataCosole.html" component={DataCosole} />
