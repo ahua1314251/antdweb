@@ -36,12 +36,12 @@ class App extends React.Component {
             <Menu.Item key="1">
               {/* <UserOutlined /> */}
               
-              <Link  to="/DataCosole"><span>数据库控制台     </span></Link>
+              <Link  to="/DataCosole.html"><span>数据库控制台     </span></Link>
          
             </Menu.Item>
             <Menu.Item key="2">
               <VideoCameraOutlined />
-              <Link  to="/Monitor"><span>系统监控     </span></Link>
+              <Link  to="/Monitor.html"><span>系统监控     </span></Link>
             </Menu.Item>
             <Menu.Item key="3">
               <UploadOutlined />
