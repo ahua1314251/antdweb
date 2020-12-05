@@ -34,14 +34,14 @@ class App extends React.Component {
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
             <Menu.Item key="1">
-              {/* <UserOutlined /> */}
+            <MenuFoldOutlined/>
               
-              <Link  to="/DataCosole.html"><span>数据库控制台     </span></Link>
+              <span> <Link  to="/DataCosole.html">数据库控制台</Link></span>
          
             </Menu.Item>
             <Menu.Item key="2">
               <VideoCameraOutlined />
-              <Link  to="/Monitor.html"><span>系统监控     </span></Link>
+              <span><Link  to="/Monitor.html">系统监控</Link></span>
             </Menu.Item>
             <Menu.Item key="3">
               <UploadOutlined />
