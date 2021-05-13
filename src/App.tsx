@@ -1,24 +1,33 @@
-import * as React from 'react';
-
+import React, { Component } from 'react';
 import './App.css';
-import { Layout, Menu } from 'antd';
-import { BrowserRouter as Router,Route, Link } from "react-router-dom";
-import { browserHistory } from 'react-router'
+import { Layout, Menu  } from 'antd';
+import { Route ,Link,useLocation,withRouter} from "react-router-dom";
 import {
   MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
+  MenuFoldOutlined
 } from '@ant-design/icons';
-import DataCosole from './pages/DataConsole';
-import Monitor from './pages/Monitor';
+
+import { ROUTES as routes  } from "./config/routes.config.tsx";
 
 const { Header, Sider, Content } = Layout;
 
+
+
 class App extends React.Component {
-  state = {
-    collapsed: false,
-  };
+  constructor(props: Readonly<{}>) {
+    super(props);
+    this.state = {
+      collapsed: false,
+      defaultSelectedKeys:'DataConsole'
+    };
+ 
+    let pathname = this.props.location.pathname;
+    routes.map((route) =>{
+      if(pathname == route.path){
+        this.state.defaultSelectedKeys=route.key
+    }})
+  }
+
 
   toggle = () => {
     this.setState({
@@ -28,25 +37,19 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router history={browserHistory} >
       <Layout className ='fullHeight'>
         <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-            <MenuFoldOutlined/>
-              
-              <span> <Link  to="/DataCosole.html">数据库控制台</Link></span>
-         
-            </Menu.Item>
-            <Menu.Item key="2">
-              <VideoCameraOutlined />
-              <span><Link  to="/Monitor.html">系统监控</Link></span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <UploadOutlined />
-              <span>nav 3</span>
-            </Menu.Item>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys = {this.state.defaultSelectedKeys} >
+           {
+                    routes.map((route) =>
+                        <Menu.Item key={route.key}>
+                         { route.iconType}
+                            <Link  isActive={(match,location)=>{this.navActiveEvent(match,location ,route.key)}}
+                             to={route.path} > {route.text}</Link>
+                        </Menu.Item>
+                    )
+                }
           </Menu>
         </Sider>
         <Layout className="site-layout fullHeight">
@@ -63,18 +66,16 @@ class App extends React.Component {
               padding: 24
             }}
           >
-             <Route exact path="/DataCosole.html" component={DataCosole} />
-             <Route exact path="/" component={Monitor} />
-             <Route exact path="/Monitor.html" component={Monitor} />
-             
-
+        {
+                                routes.map((route) =>
+                                    <Route exact key={route.key} path={route.path} component={route.component}/>)
+             }
 
           </Content>
         </Layout>
       </Layout>
-      </Router>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

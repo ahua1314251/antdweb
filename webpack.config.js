@@ -11,7 +11,8 @@ const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports={
-    mode: 'production',
+    // mode: 'production',
+    mode: 'development',
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".ts", ".tsx",".js"]
@@ -22,7 +23,8 @@ module.exports={
     },
     output: {
         path: __dirname + '/dist',
-        filename: "bundle.js"
+        filename: "bundle.js",
+        chunkFilename: '[name].min.js'
     },
 
     module:{
