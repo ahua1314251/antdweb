@@ -1,17 +1,57 @@
 import React from 'react';
-import {Row,Col} from 'antd';
-
+import { Row, Col, Table } from 'antd';
+import dataBaseApi from '../utils/DataBaseApi'
 class DataCosole extends React.Component {
 
-    render(){
-        return (<div>DataCosole
+    constructor(props: Readonly<{}>) {
+        super(props);
+        this.state = {
+            data: [],
+            loading: false,
+            pagination: {
+                current: 1,
+                pageSize: 10,
+              }
+        }
+    }
+     componentDidMount(){
+        this.getTableList(null);
+    }
+    handleTableChange = (pagination, filters, sorter) => {
+        console.log(pagination);
+        this.getTableList(pagination);
+    }
+    
+    getTableList = async (pagination) => {
+        this.setState({ loading: true })
+        const response = await dataBaseApi.getTablelist({});
+        this.setState({ loading: false, data: response.data })
+    }
+
+
+    render() {
+        const { loading, data } = this.state
+        return (<div>
             <Row>
-      <Col span={6}>col-6</Col>
-      <Col span={18}>col-18</Col>
-    </Row>
-            
-    </div>
-            );
+                <Col span={24}>
+                    <Table dataSource={data} 
+                    rowKey={record => record.tableName} 
+                    loading={loading} 
+                    onChange={this.handleTableChange} 
+                    pagination={ {showSizeChanger: true}}
+                    size = {'small'}
+                    >
+                        <Table.Column title="表名称" dataIndex="tableName" key="tableName" />
+
+                    </Table>
+<br/>
+
+                </Col>
+
+            </Row>
+
+        </div>
+        );
     };
 }
 

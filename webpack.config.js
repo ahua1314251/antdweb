@@ -94,7 +94,9 @@ module.exports={
         new HtmlWebpackPlugin({
             template:"./public/index.html",
             filename:"index.html",
-            favicon: path.resolve('./public/favicon.ico')
+            favicon: path.resolve('./public/favicon.ico'),
+            manifest: path.resolve('./public/manifest.json'),
+            publicPath:path.resolve('./public')
         })
         // ,
         // new UglifyJsPlugin({
@@ -132,7 +134,17 @@ module.exports={
                 { from: /\.html/, to: '/' }
             ]
         },
-        port: 9000
+        port: 9000,
+        //静态资源 或者mock资源
+        contentBase: path.join(__dirname, 'public'),
+        contentBasePublicPath: '/',
+        proxy: [
+            {
+              context: ['/database'],
+              target: 'http://localhost:80',
+            },
+          ]
+
     },
     optimization: {
         splitChunks: {

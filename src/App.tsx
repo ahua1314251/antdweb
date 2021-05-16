@@ -45,8 +45,7 @@ class App extends React.Component {
                     routes.map((route) =>
                         <Menu.Item key={route.key}>
                          { route.iconType}
-                            <Link  isActive={(match,location)=>{this.navActiveEvent(match,location ,route.key)}}
-                             to={route.path} > {route.text}</Link>
+                            <Link to={route.path} > {route.text}</Link>
                         </Menu.Item>
                     )
                 }
