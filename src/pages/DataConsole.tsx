@@ -1,32 +1,52 @@
-import React from 'react';
-import { Row, Col, Table } from 'antd';
+import React, { useState } from 'react';
+import { Row, Col, Table, Modal, Button, Form, Select, Checkbox } from 'antd';
 import dataBaseApi from '../utils/DataBaseApi'
 class DataCosole extends React.Component {
-
     constructor(props: Readonly<{}>) {
         super(props);
         this.state = {
+            isModalVisible: false,
             data: [],
             loading: false,
             pagination: {
                 current: 1,
                 pageSize: 10,
-              }
+            }
         }
     }
-     componentDidMount(){
+    componentDidMount() {
         this.getTableList(null);
     }
     handleTableChange = (pagination, filters, sorter) => {
         console.log(pagination);
         this.getTableList(pagination);
     }
-    
+
     getTableList = async (pagination) => {
         this.setState({ loading: true })
         const response = await dataBaseApi.getTablelist({});
         this.setState({ loading: false, data: response.data })
     }
+
+    showModal = () => {
+        this.setIsModalVisible(true);
+    };
+
+    handleOk = () => {
+        this.setIsModalVisible(false);
+    };
+
+    handleCancel = () => {
+        this.setIsModalVisible(false);
+    };
+    setIsModalVisible = (isModalVisible) => {
+        this.setState({ isModalVisible: isModalVisible })
+    };
+
+    showAction = (id) => {
+        return (<Button type="primary" onClick={this.showModal}>生成代码</Button>)
+    }
+
 
 
     render() {
@@ -34,22 +54,43 @@ class DataCosole extends React.Component {
         return (<div>
             <Row>
                 <Col span={24}>
-                    <Table dataSource={data} 
-                    rowKey={record => record.tableName} 
-                    loading={loading} 
-                    onChange={this.handleTableChange} 
-                    pagination={ {showSizeChanger: true}}
-                    size = {'small'}
+                    <Table dataSource={data}
+                        rowKey={record => record.tableName}
+                        loading={loading}
+                        onChange={this.handleTableChange}
+                        pagination={{ showSizeChanger: true }}
+                        size={'small'}
                     >
+
+                        <Table.Column title="数据库名称" dataIndex="dbName" key="dbName" />
+                        <Table.Column title="数据库类型" dataIndex="dbType" key="dbType" />
                         <Table.Column title="表名称" dataIndex="tableName" key="tableName" />
+                        {/* <Table.Column title="建表语句" dataIndex="sql" key="sql" /> */}
+                        <Table.Column title="修改时间" dataIndex="gmtModified" key="gmtModified" />
+                        <Table.Column title="操作" key="action" render={this.showAction} />
 
                     </Table>
-<br/>
+                    <br />
 
                 </Col>
 
             </Row>
 
+<Modal title="Basic Modal" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} width={800} >
+<Form name="validate_other" layout={'vertical'}
+ initialValues={{'checkbox-group': ['javaDO', 'mapperInterface','mapperXml','mapperService','mapperController','antdTable']}}>
+<Form.Item name="checkbox-group" label="生成模板">
+<Checkbox.Group>
+<Checkbox value="javaDO" style={{ lineHeight: '32px' }}>javaDO</Checkbox>
+<Checkbox value="mapperInterface" style={{ lineHeight: '32px' }} >mapperInterface</Checkbox> 
+<Checkbox value="mapperXml" style={{ lineHeight: '32px' }} >mapperXml</Checkbox> 
+<Checkbox value="mapperService" style={{ lineHeight: '32px' }} >mapperService</Checkbox> 
+<Checkbox value="mapperController" style={{ lineHeight: '32px' }} >mapperController</Checkbox> 
+<Checkbox value="antdTable" style={{ lineHeight: '32px' }} >antdTable</Checkbox> 
+</Checkbox.Group>
+</Form.Item>
+</Form>
+</Modal>
         </div>
         );
     };
