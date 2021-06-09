@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Table, Modal, Button, Form, Select, Checkbox,Input } from 'antd';
+import { Row, Col, Table, Modal, Button, Form, Space, Checkbox,Input } from 'antd';
 import dataBaseApi from '../utils/DataBaseApi'
 import TextArea from '_antd@4.2.5@antd/lib/input/TextArea';
 import { FormInstance } from 'antd/lib/form';
@@ -39,13 +39,22 @@ class DataTemplate extends React.Component {
 
     handleOk = async() => {
         const param = this.formRef.current!.getFieldValue();
+        if(param.id != null){
         const response = await dataBaseApi.updateTemplate(param);
+        }else 
+        {
+        const response = await dataBaseApi.createTemplate(param);
+        }
         this.setIsModalVisible(false);
         this.getTableList(null);
+
     }
+
 
     handleCancel = () => {
         this.setIsModalVisible(false);
+        this.formRef.current!.resetFields();
+        rerutn ;
     }
 
     setIsModalVisible = (isModalVisible) => {
@@ -53,7 +62,7 @@ class DataTemplate extends React.Component {
     }
 
     showAction = (record) => {
-        return (<Button type="primary" onClick={()=>{this.showModal(record)} }>修改</Button>)
+        return (<Button  size="small" type="primary" onClick={()=>{this.showModal(record)} }>修改</Button>)
     }
 
 
@@ -64,12 +73,15 @@ class DataTemplate extends React.Component {
         return (<div>
             <Row>
                 <Col span={24}>
+                <Space style={{ marginBottom: 16 }}>
+          <Button type="primary" size="small" danger onClick={()=>{this.showModal({})}>新增</Button>
+        </Space>
                     <Table dataSource={data}
                         rowKey={record => record.tableName}
                         loading={loading}
                         onChange={this.handleTableChange}
                         pagination={{ showSizeChanger: true }}
-                        size={'small'}
+                        size='small'
                     >
                         <Table.Column title="模板名称" dataIndex="templateName" key="templateName" />
                         <Table.Column title="数据库类型" dataIndex="dbType" key="dbType" />

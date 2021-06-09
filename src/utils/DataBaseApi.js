@@ -15,7 +15,13 @@ export default {
   async updateTemplate (params) {
     let data = await Ajax.post('database/updateTemplate.json', params)
     return data
+  },
+
+  async createTemplate (params) {
+    let data = await Ajax.post('database/createTemplate.json', params)
+    return data
   }
+  
 
 
 }
