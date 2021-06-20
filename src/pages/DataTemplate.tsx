@@ -54,7 +54,6 @@ class DataTemplate extends React.Component {
     handleCancel = () => {
         this.setIsModalVisible(false);
         this.formRef.current!.resetFields();
-        rerutn ;
     }
 
     setIsModalVisible = (isModalVisible) => {
