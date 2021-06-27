@@ -95,7 +95,7 @@ class DataTemplate extends React.Component {
 
             </Row>
 <Form name="validate_other" layout={'vertical'}  ref={this.formRef} >
-<Modal title="Basic Modal" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} width={800} 
+<Modal title="模板编辑" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} width={800} 
 maskClosable = {false}
 >
 

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Row, Col, Table, Modal, Button, Form, Select, Checkbox } from 'antd';
+import { Row, Col, Table, Modal, Button, Form, Select, Checkbox,Input } from 'antd';
 import dataBaseApi from '../utils/DataBaseApi'
 class DataCosole extends React.Component {
+    formRef = React.createRef<FormInstance>();
     constructor(props: Readonly<{}>) {
         super(props);
         this.state = {
@@ -28,11 +29,14 @@ class DataCosole extends React.Component {
         this.setState({ loading: false, data: response.data })
     }
 
-    showModal = () => {
+    showModal = (record) => {
         this.setIsModalVisible(true);
+        this.formRef.current!.setFieldsValue({sql:record.sql});
     };
 
-    handleOk = () => {
+    handleOk = async () => {
+        const param =  this.formRef.current!.getFieldValue();
+        const response = await dataBaseApi.createCode(param);
         this.setIsModalVisible(false);
     };
 
@@ -43,8 +47,8 @@ class DataCosole extends React.Component {
         this.setState({ isModalVisible: isModalVisible })
     };
 
-    showAction = (id) => {
-        return (<Button type="primary" onClick={this.showModal}>生成代码</Button>)
+    showAction = (record) => {
+        return (<Button type="primary"  onClick={()=>{this.showModal(record)}} >生成代码</Button>)
     }
 
 
@@ -61,25 +65,26 @@ class DataCosole extends React.Component {
                         pagination={{ showSizeChanger: true }}
                         size={'small'}
                     >
-
                         <Table.Column title="数据库名称" dataIndex="dbName" key="dbName" />
                         <Table.Column title="数据库类型" dataIndex="dbType" key="dbType" />
                         <Table.Column title="表名称" dataIndex="tableName" key="tableName" />
                         {/* <Table.Column title="建表语句" dataIndex="sql" key="sql" /> */}
                         <Table.Column title="修改时间" dataIndex="gmtModified" key="gmtModified" />
-                        <Table.Column title="操作" key="action" render={this.showAction} />
+                        <Table.Column title="操作" key="action"  render={(text, record)=>this.showAction(record)} />
 
                     </Table>
                     <br />
-
                 </Col>
-
             </Row>
+<Form name="validate_other" layout={'vertical'} ref={this.formRef}
+ initialValues={{'templateNames': ['javaDO', 'mapperInterface','mapperXml','mapperService','mapperController','antdTable']}}>
 
-<Modal title="Basic Modal" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} width={800} >
-<Form name="validate_other" layout={'vertical'}
- initialValues={{'checkbox-group': ['javaDO', 'mapperInterface','mapperXml','mapperService','mapperController','antdTable']}}>
-<Form.Item name="checkbox-group" label="生成模板">
+<Modal title="Basic Modal" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} width={800} maskClosable = {false}>
+
+<Form.Item name="sql" label="sql" hidden={true} >
+<Input />
+</Form.Item>
+<Form.Item name="templateNames" label="生成模板">
 <Checkbox.Group>
 <Checkbox value="javaDO" style={{ lineHeight: '32px' }}>javaDO</Checkbox>
 <Checkbox value="mapperInterface" style={{ lineHeight: '32px' }} >mapperInterface</Checkbox> 
@@ -89,8 +94,8 @@ class DataCosole extends React.Component {
 <Checkbox value="antdTable" style={{ lineHeight: '32px' }} >antdTable</Checkbox> 
 </Checkbox.Group>
 </Form.Item>
-</Form>
 </Modal>
+</Form>
         </div>
         );
     };
