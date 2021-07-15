@@ -47,6 +47,7 @@ class App extends React.Component {
                          { route.iconType}
                             <Link to={route.path} > {route.text}</Link>
                         </Menu.Item>
+                
                     )
                 }
           </Menu>
