@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Row, Col, Input } from 'antd';
 import dataBaseApi from '../utils/DataBaseApi'
 import {UnControlled as CodeMirror} from 'react-codemirror2'
+
+import 'codemirror/mode/xml/xml';
+
+
 class CodeShow extends React.Component {
     formRef = React.createRef<FormInstance>();
     constructor(props: Readonly<{}>) {
@@ -25,17 +29,17 @@ class CodeShow extends React.Component {
 
 
     render() {
-        const code = 'const a = 0;';
-
         return (
         <div>
             <Row>
-                <Col span={24}>
+                <Col span={24}>qeqwe
                 <CodeMirror
-  value={code}
+  value='<h1>I ♥ react-codemirror2</h1>'
   options={{
-    keyMap: 'sublime',
-    mode: 'jsx',
+    mode: 'xml',
+    lineNumbers: true
+  }}
+  onChange={(editor, data, value) => {
   }}
 />
                 </Col>

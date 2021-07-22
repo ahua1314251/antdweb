@@ -35,6 +35,15 @@ class App extends React.Component {
     });
   };
 
+  showMenuItem = (route) => {
+    if (route.menuShow) {
+      return (<Menu.Item key={route.key}>
+        {route.iconType}
+        <Link to={route.path} > {route.text}</Link>
+      </Menu.Item>)
+    }
+  };
+
   render() {
     return (
       <Layout className ='fullHeight'>
@@ -42,12 +51,9 @@ class App extends React.Component {
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys = {this.state.defaultSelectedKeys} >
            {
-                    routes.map((route) =>
-                        <Menu.Item key={route.key}>
-                         { route.iconType}
-                            <Link to={route.path} > {route.text}</Link>
-                        </Menu.Item>
-                
+                    routes.map((route) =>{
+                    return this.showMenuItem(route);
+                    }
                     )
                 }
           </Menu>

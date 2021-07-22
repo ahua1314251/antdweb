@@ -39,7 +39,8 @@ const ROUTES = [
         text: '监控',
         menuShow:true,
         component: Monitor
-    },
+    }
+    ,
     {
         key: 'CodeShow',
         path: '/CodeShow.html',

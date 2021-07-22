@@ -27,11 +27,20 @@ module.exports = {
     },
 
     module: {
-        rules: [{
+        rules: [
+            // {
+            //     test: /\.css$/,
+            //     exclude: /node_modules/,
+            //     use: 'happypack/loader?id=cssLoader'
+            // },
+            {
                 test: /\.css$/,
-                exclude: /node_modules/,
-                use: 'happypack/loader?id=cssLoader'
-            },
+                use: [
+                  'style-loader',
+                  'css-loader'
+                ]
+              }
+            ,
             {
                 test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
                 exclude: /node_modules/,
