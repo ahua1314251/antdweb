@@ -40,18 +40,19 @@ const ROUTES = [
         menuShow:true,
         component: Monitor
     }
-    ,
-    {
-        key: 'CodeShow',
-        path: '/CodeShow.html',
-        iconType: <VideoCameraOutlined />,
-        text: '代码生成',
-        menuShow:false,
-        component: CodeShow
-    }
+    
 ];
-
-export { ROUTES };
+const blankRoutes =[
+{
+    key: 'CodeShow',
+    path: '/CodeShow.html',
+    iconType: <VideoCameraOutlined />,
+    text: '代码生成',
+    menuShow:false,
+    component: CodeShow
+}
+]
+export { ROUTES,blankRoutes };
 
 
 

@@ -36,7 +36,8 @@ class DataCosole extends React.Component {
 
     handleOk = async () => {
         const param =  this.formRef.current!.getFieldValue();
-        window.open(`/CodeShow`)
+
+        window.open(`/CodeShow.html`)
         // this.props.history.push({ pathname : '/CodeShow' , state : { id : '6666' }})
         // const response = await dataBaseApi.createCode(param);
         // this.setIsModalVisible(false);

@@ -1,50 +1,95 @@
 import React, { useState } from 'react';
 import { Row, Col, Input } from 'antd';
+import CodeMirror from '@uiw/react-codemirror';
 import dataBaseApi from '../utils/DataBaseApi'
-import {UnControlled as CodeMirror} from 'react-codemirror2'
+import 'codemirror/lib/codemirror.js'
+@import 'codemirror/lib/codemirror.css';
 
-import 'codemirror/mode/xml/xml';
+//导入使用的语言语法定义文件
+require("codemirror/mode/python/python.js");
+require("codemirror/mode/javascript/javascript.js");
+require("codemirror/mode/clike/clike.js");
+require("codemirror/mode/shell/shell.js");
+//导入选中的theme文件
+require("codemirror/theme/blackboard.css");
+//导入自动提示核心文件及样式
+require("codemirror/addon/hint/show-hint.css");
+require("codemirror/addon/hint/show-hint.js");
+//导入指定语言的提示文件
+require("codemirror/addon/hint/javascript-hint.js");
+
+
+
+// 主题风格
+import 'codemirror/theme/solarized.css';
+// 代码模式，clike是包含java,c++等模式的
+import 'codemirror/mode/clike/clike.js';
+import 'codemirror/mode/css/css.js';
+//ctrl+空格代码提示补全
+@import 'codemirror/addon/hint/show-hint.css';
+import 'codemirror/addon/hint/show-hint';
+import 'codemirror/addon/hint/anyword-hint.js';
+//代码高亮
+import 'codemirror/addon/selection/active-line.js';
 
 
 class CodeShow extends React.Component {
-    formRef = React.createRef<FormInstance>();
+
     constructor(props: Readonly<{}>) {
         super(props);
-        this.state = {
-            isModalVisible: false,
-            data: [],
-            loading: false,
-            pagination: {
-                current: 1,
-                pageSize: 10,
-            }
-        }
+        this.instance = null;
+    }
+    state={
+        value :123
     }
 
     createCode = async () => {
-        const param =  this.formRef.current!.getFieldValue();
-        const response = await dataBaseApi.createCode(param);
-        this.setIsModalVisible(false);
+        const response = await dataBaseApi.createCode({1:1});
     };
 
 
     render() {
+        const options ={
+            
+            height:100,
+            mode: {name:'text/x-java'},
+            line:true,
+            theme: 'solarized dark',
+            autofocus:true,//自动获取焦点
+            styleActiveLine:true,//光标代码高亮
+            lineNumbers: true, //显示行号
+            smartIndent:true,  //自动缩进
+            //start-设置支持代码折叠
+            lineWrapping:true,
+            foldGutter:true,
+            gutters:['CodeMirror-linenumbers','CodeMirror-foldgutter'],//end
+            extraKeys:{
+                "Ctrl":"autocomplete",
+                "Ctrl-S": function (editor) {
+                        that.codeSave(editor)
+                      },
+                "Ctrl-Z":function (editor) {
+                        editor.undo();
+                      },//undo
+                "F8":function (editor) {
+                        editor.redo();
+                      },//Redo
+                    },
+                matchBrackets: true,  //括号匹配，光标旁边的括号都高亮显示
+                autoCloseBrackets: true //键入时将自动关闭()[]{}''""
+                  }
         return (
-        <div>
-            <Row>
-                <Col span={24}>qeqwe
-                <CodeMirror
-  value='<h1>I ♥ react-codemirror2</h1>'
-  options={{
-    mode: 'xml',
-    lineNumbers: true
-  }}
-  onChange={(editor, data, value) => {
-  }}
-/>
-                </Col>
-            </Row>
-        </div>
+            <div>
+                <Row>
+                    <Col span={6}>
+                        <CodeMirror value="var a =1" options={options} height={400}/>
+                    </Col>
+                    <Col span={6}>
+                        <CodeMirror value="var a =1" options={options} />
+                    </Col>
+                </Row>
+            </div>
+
         );
     };
 }

@@ -4,11 +4,10 @@
   "private": true,
   "dependencies": {
     "@types/react-router-dom": "^5.1.5",
+    "@uiw/react-codemirror": "^3.0.15",
     "antd": "4.2.5",
     "axios": "^0.21.1",
-    "codemirror": "^5.62.2",
     "react": "^16.13.1",
-    "react-codemirror2": "^7.2.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts-ts": "3.1.0",
