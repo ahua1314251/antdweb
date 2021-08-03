@@ -31,16 +31,13 @@ class DataCosole extends React.Component {
 
     showModal = (record) => {
         this.setIsModalVisible(true);
-        this.formRef.current!.setFieldsValue({sql:record.sql});
+        this.formRef.current!.setFieldsValue({sqlId:record.id});
     };
 
     handleOk = async () => {
         const param =  this.formRef.current!.getFieldValue();
-
-        window.open(`/CodeShow.html`)
-        // this.props.history.push({ pathname : '/CodeShow' , state : { id : '6666' }})
-        // const response = await dataBaseApi.createCode(param);
-        // this.setIsModalVisible(false);
+        window.open('/CodeShow.html?param='+ JSON.stringify(param))
+        this.setIsModalVisible(false);
     };
 
     handleCancel = () => {
@@ -84,7 +81,7 @@ class DataCosole extends React.Component {
 
 <Modal title="Basic Modal" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} width={800} maskClosable = {false}>
 
-<Form.Item name="sql" label="sql" hidden={true} >
+<Form.Item name="sqlId" label="sqlId" hidden={true} >
 <Input />
 </Form.Item>
 <Form.Item name="templateNames" label="生成模板">

@@ -37,56 +37,72 @@ class CodeShow extends React.Component {
 
     constructor(props: Readonly<{}>) {
         super(props);
+        const paramsString = props.location.search.substring(1)
+        const searchParams = new URLSearchParams(paramsString)
+        const param = JSON.parse(searchParams.get('param'));
+        this.createCode(param);
         this.instance = null;
     }
-    state={
-        value :123
+    state = {
+        data: []
     }
 
-    createCode = async () => {
-        const response = await dataBaseApi.createCode({1:1});
+    createCode = async (param) => {
+        const response = await dataBaseApi.createCode(param);
+        this.setState({ data: response.data })
     };
+
+    showMirrors = (templates, options) => {
+        let res =[];  
+           {templates.forEach(item => {
+                console.log(item);
+                res.push(
+                <Col span={6}>
+                    {item.templateName}
+                    <CodeMirror value={item.result} options={options} height={400} />
+                </Col>)
+            })}
+        return res
+    
+    }
 
 
     render() {
-        const options ={
-            
-            height:100,
-            mode: {name:'text/x-java'},
-            line:true,
+        const { data } = this.state;
+        const options = {
+
+            height: 100,
+            mode: { name: 'text/x-java' },
+            line: true,
             theme: 'solarized dark',
-            autofocus:true,//自动获取焦点
-            styleActiveLine:true,//光标代码高亮
+            autofocus: true,//自动获取焦点
+            styleActiveLine: true,//光标代码高亮
             lineNumbers: true, //显示行号
-            smartIndent:true,  //自动缩进
+            smartIndent: true,  //自动缩进
             //start-设置支持代码折叠
-            lineWrapping:true,
-            foldGutter:true,
-            gutters:['CodeMirror-linenumbers','CodeMirror-foldgutter'],//end
-            extraKeys:{
-                "Ctrl":"autocomplete",
+            lineWrapping: true,
+            foldGutter: true,
+            gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],//end
+            extraKeys: {
+                "Ctrl": "autocomplete",
                 "Ctrl-S": function (editor) {
-                        that.codeSave(editor)
-                      },
-                "Ctrl-Z":function (editor) {
-                        editor.undo();
-                      },//undo
-                "F8":function (editor) {
-                        editor.redo();
-                      },//Redo
-                    },
-                matchBrackets: true,  //括号匹配，光标旁边的括号都高亮显示
-                autoCloseBrackets: true //键入时将自动关闭()[]{}''""
-                  }
+                    that.codeSave(editor)
+                },
+                "Ctrl-Z": function (editor) {
+                    editor.undo();
+                },//undo
+                "F8": function (editor) {
+                    editor.redo();
+                },//Redo
+            },
+            matchBrackets: true,  //括号匹配，光标旁边的括号都高亮显示
+            autoCloseBrackets: true //键入时将自动关闭()[]{}''""
+        }
         return (
             <div>
-                <Row>
-                    <Col span={6}>
-                        <CodeMirror value="var a =1" options={options} height={400}/>
-                    </Col>
-                    <Col span={6}>
-                        <CodeMirror value="var a =1" options={options} />
-                    </Col>
+
+<Row>
+                {this.showMirrors(data,options)}
                 </Row>
             </div>
 
