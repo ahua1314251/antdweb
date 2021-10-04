@@ -77,7 +77,7 @@ class DataCosole extends React.Component {
                 </Col>
             </Row>
 <Form name="validate_other" layout={'vertical'} ref={this.formRef}
- initialValues={{'templateNames': ['javaDO', 'mapperInterface','mapperXml','mapperService','mapperController','antdTable']}}>
+ initialValues={{'templateNames': ['javaDO', 'queryDO','mapperInterface','mapperXml','mapperService','mapperController','antdTable']}}>
 
 <Modal title="Basic Modal" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel} width={800} maskClosable = {false}>
 
@@ -87,6 +87,7 @@ class DataCosole extends React.Component {
 <Form.Item name="templateNames" label="生成模板">
 <Checkbox.Group>
 <Checkbox value="javaDO" style={{ lineHeight: '32px' }}>javaDO</Checkbox>
+<Checkbox value="queryDO" style={{ lineHeight: '32px' }}>javaDO</Checkbox>
 <Checkbox value="mapperInterface" style={{ lineHeight: '32px' }} >mapperInterface</Checkbox> 
 <Checkbox value="mapperXml" style={{ lineHeight: '32px' }} >mapperXml</Checkbox> 
 <Checkbox value="mapperService" style={{ lineHeight: '32px' }} >mapperService</Checkbox> 

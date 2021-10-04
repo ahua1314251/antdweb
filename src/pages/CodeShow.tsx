@@ -57,8 +57,8 @@ class CodeShow extends React.Component {
            {templates.forEach(item => {
                 console.log(item);
                 res.push(
-                <Col span={6}>
-                    {item.templateName}
+                <Col span={12}>
+                    {item.fileName}
                     <CodeMirror value={item.result} options={options} height={400} />
                 </Col>)
             })}

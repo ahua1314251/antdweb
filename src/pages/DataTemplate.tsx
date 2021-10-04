@@ -3,6 +3,7 @@ import { Row, Col, Table, Modal, Button, Form, Space, Checkbox,Input } from 'ant
 import dataBaseApi from '../utils/DataBaseApi'
 import TextArea from '_antd@4.2.5@antd/lib/input/TextArea';
 import { FormInstance } from 'antd/lib/form';
+import { table } from 'console';
 class DataTemplate extends React.Component {
     formRef = React.createRef<FormInstance>();
     constructor(props: Readonly<{}>) {
@@ -73,7 +74,7 @@ class DataTemplate extends React.Component {
             <Row>
                 <Col span={24}>
                 <Space style={{ marginBottom: 16 }}>
-          <Button type="primary" size="small" danger onClick={()=>{this.showModal({})}>新增</Button>
+          <Button type="primary" size="small" danger onClick={()=>{this.showModal({'fileName':"${table.name}"})}>新增</Button>
         </Space>
                     <Table dataSource={data}
                         rowKey={record => record.tableName}
@@ -111,8 +112,11 @@ maskClosable = {false}
 <Form.Item name="dbType" label="数据库类型">
 <Input />
 </Form.Item>
+<Form.Item name="fileName" label="生成文件名称">
+<Input/>
+</Form.Item>
 <Form.Item name="content" label="模板内容">
-<TextArea  rows={4} />
+<TextArea  rows={10} />
 </Form.Item>
 
 </Modal>
