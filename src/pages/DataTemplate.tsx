@@ -112,6 +112,9 @@ maskClosable = {false}
 <Form.Item name="dbType" label="数据库类型">
 <Input />
 </Form.Item>
+<Form.Item name="filePath" label="生成文件目录">
+<Input/>
+</Form.Item>
 <Form.Item name="fileName" label="生成文件名称">
 <Input/>
 </Form.Item>
