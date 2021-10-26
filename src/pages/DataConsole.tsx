@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Table, Modal, Button, Form, Select, Checkbox,Input } from 'antd';
+import { Row, Col, Table, Modal, Button, Form, Select, Checkbox,Input,Space } from 'antd';
 import dataBaseApi from '../utils/DataBaseApi'
 class DataCosole extends React.Component {
     formRef = React.createRef<FormInstance>();
@@ -40,6 +40,14 @@ class DataCosole extends React.Component {
         this.setIsModalVisible(false);
     };
 
+
+    downloadCode = async (record) => {
+        this.formRef.current!.setFieldsValue({sqlId:record.id});
+        const param =  this.formRef.current!.getFieldValue();
+        window.open('/database/downloadCode?param='+ JSON.stringify(param))
+        this.setIsModalVisible(false);
+    };
+
     handleCancel = () => {
         this.setIsModalVisible(false);
     };
@@ -48,8 +56,12 @@ class DataCosole extends React.Component {
     };
 
     showAction = (record) => {
-        return (<Button type="primary"  onClick={()=>{this.showModal(record)}} >生成代码</Button>)
+        return ( <Space size="middle"><div className='ant-space-item' ><Button size="small"  type="primary" onClick={() => { this.showModal(record); } }>生成代码</Button></div>
+        
+        <div className='ant-space-item' ><Button size="small"  type="primary" onClick={() => { this.downloadCode(record); } }>下载代码</Button></div> </Space>)
     }
+
+
 
 
 
