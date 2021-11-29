@@ -10,8 +10,8 @@ const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
-    // mode: 'production',
-    mode: 'development',
+    mode: 'production',
+    // mode: 'development',
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".ts", ".tsx", ".js"]
@@ -22,8 +22,8 @@ module.exports = {
     },
     output: {
         path: __dirname + '/dist',
-        filename: "bundle.js",
-        chunkFilename: '[name].min.js'
+        filename: "bundle.js"
+        // chunkFilename: '[name].min.js'
     },
 
     module: {
@@ -160,13 +160,13 @@ module.exports = {
     },
     optimization: {
         splitChunks: {
-            chunks: "all", //在做代码分割时，只对异步代码生效，写成all的话，同步异步代码都会分割
+            // chunks: "all", //在做代码分割时，只对异步代码生效，写成all的话，同步异步代码都会分割
             minSize: 250000, //引入的包大于500KB才做代码分割
             maxSize: 450000,
-            minChunks: 2, //当一个包至少被用了多少次的时候才进行代码分割
+            minChunks: 3, //当一个包至少被用了多少次的时候才进行代码分割
             maxAsyncRequests: 3, //同时加载的模块数最多是5个
-            maxInitialRequests: 4, //入口文件做代码分割最多能分成3个js文件
-            automaticNameDelimiter: '~', //文件生成时的连接符
+            maxInitialRequests: 2, //入口文件做代码分割最多能分成3个js文件
+            // automaticNameDelimiter: '~', //文件生成时的连接符
             name: true, //让cacheGroups里设置的名字有效
             cacheGroups: { //当打包同步代码时,上面的参数生效
                 vendors: {
@@ -187,7 +187,6 @@ module.exports = {
         //都需要用到SplitChunkPlugin这个插件
     },
     externals: {
-
         // 'react': 'window.React',
         // 'reactDOM': 'window.ReactDOM'
     }
